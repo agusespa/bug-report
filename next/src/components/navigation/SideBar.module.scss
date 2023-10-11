@@ -1,0 +1,19 @@
+.list {
+    display: flex;
+    flex-direction: column;
+    list-style: none;
+    gap: 1rem;
+
+    .sidebarLink {
+        margin: 0;
+        font-size: 1.1rem;
+        color: black;
+        background-color: transparent;
+        cursor: pointer;
+        text-decoration: none;
+    }
+
+    .active {
+        font-weight: 600;
+    }
+}

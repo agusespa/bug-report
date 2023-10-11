@@ -8,5 +8,7 @@ import { selectAllProducts } from "../store/product/product.selectors";
 export class StoreFacade {
   constructor(private store: Store) {}
 
-  getProducts$: Observable<Product[]> = this.store.pipe(select(selectAllProducts));
+  getProducts$: Observable<Product[]> = this.store.pipe(
+    select(selectAllProducts)
+  );
 }

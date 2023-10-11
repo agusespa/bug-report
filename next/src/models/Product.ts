@@ -1,26 +1,31 @@
 export interface Product {
   id: number;
-  name: string;
+  title: string;
+  description: string;
   price: Price;
 }
 
 interface Price {
-  amount: string;
+  amount: number;
   currency: string;
 }
 
 export interface ProductResponse {
   id: number;
-  name: string;
-  price: string;
+  title: string;
+  description: string;
+  price: number;
   currency: string;
 }
+
+export type ProductsResponse = { products: ProductResponse[] };
 
 export function mapToProduct(res: ProductResponse): Product {
   return {
     id: res.id,
-    name: res.name,
-    price: { amount: res.price, currency: res.currency },
+    title: res.title,
+    description: res.description,
+    price: { amount: res.price, currency: "USD" },
   };
 }
 
