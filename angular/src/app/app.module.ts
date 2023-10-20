@@ -6,10 +6,10 @@ import { EffectsModule } from "@ngrx/effects";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
-import { ProductPageModule } from "./pages/product-page/product-page.module";
 import { CommonModule } from "@angular/common";
 import { ProductService } from "./service/product.service";
 import { HttpClientModule } from "@angular/common/http";
+import { NavbarModule } from "./components/app/navbar/navbar.module";
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,12 +18,12 @@ import { HttpClientModule } from "@angular/common/http";
     AppRoutingModule,
     CommonModule,
     HttpClientModule,
-    ProductPageModule,
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
     }),
+    NavbarModule,
   ],
   providers: [ProductService],
   bootstrap: [AppComponent],

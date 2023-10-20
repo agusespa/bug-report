@@ -4,20 +4,20 @@ import { of } from "rxjs/internal/observable/of";
 import { catchError, map, mergeMap } from "rxjs/operators";
 import { ProductService } from "src/app/service/product.service";
 import {
-  loadProducts,
-  loadProductsSuccess,
-  loadProductsFail,
-} from "./product.actions";
+  loadCategories,
+  loadCategoriesFail,
+  loadCategoriesSuccess,
+} from "./categories.actions";
 
 @Injectable()
-export class ProductEffects {
-  loadProducts$ = createEffect(() =>
+export class CategoriesEffects {
+  loadCategories$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadProducts),
+      ofType(loadCategories),
       mergeMap(() =>
-        this.productService.getProducts().pipe(
-          map((products) => loadProductsSuccess({ products })),
-          catchError((error) => of(loadProductsFail({ error })))
+        this.productService.getCategories().pipe(
+          map((categories) => loadCategoriesSuccess({ categories })),
+          catchError((error) => of(loadCategoriesFail({ error })))
         )
       )
     )

@@ -3,28 +3,28 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { createReducer, on } from "@ngrx/store";
 import { Product } from "src/app/models/Product";
 import {
-  loadProducts,
+  loadProductsByCategory,
   loadProductsFail,
   loadProductsSuccess,
-} from "./product.actions";
+} from "./products.actions";
 
-export interface ProductState extends EntityState<Product> {
+export interface ProductsState extends EntityState<Product> {
   loading: boolean;
   error: HttpErrorResponse | undefined;
 }
 
-export const productAdapter = createEntityAdapter<Product>({
+export const productsAdapter = createEntityAdapter<Product>({
   selectId: (product) => product.id,
 });
 
-const initialState: ProductState = productAdapter.getInitialState({
+const initialState: ProductsState = productsAdapter.getInitialState({
   loading: false,
   error: undefined,
 });
 
-export const productReducer = createReducer(
+export const productsReducer = createReducer(
   initialState,
-  on(loadProducts, (state, _) => {
+  on(loadProductsByCategory, (state, _) => {
     return {
       ...state,
       loading: true,
@@ -32,13 +32,14 @@ export const productReducer = createReducer(
   }),
   on(loadProductsSuccess, (state, action) => {
     return {
-      ...productAdapter.setAll(action.products, state),
+      ...productsAdapter.upsertMany(action.products, state),
       loading: false,
     };
   }),
   on(loadProductsFail, (state, action) => {
     return {
       ...state,
+      loading: false,
       error: action.error,
     };
   })

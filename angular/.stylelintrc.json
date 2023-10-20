@@ -1,0 +1,13 @@
+{
+    "extends": "stylelint-config-standard-scss",
+    "defaultSeverity": "warning",
+    "ignoreFiles": ["*.ts"],
+    "plugins": ["stylelint-prettier"],
+    "rules": {
+        "color-function-notation": "legacy",
+        "alpha-value-notation": "number",
+        "rule-empty-line-before": null,
+        "shorthand-property-no-redundant-values": null,
+        "prettier/prettier": true
+    }
+}

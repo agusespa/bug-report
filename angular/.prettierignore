@@ -1,0 +1,9 @@
+build
+coverage
+package-lock.json
+assets/
+.prettierignore
+.git
+.gitignore
+.angular
+.husky

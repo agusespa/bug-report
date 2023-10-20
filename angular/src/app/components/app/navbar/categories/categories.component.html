@@ -1,0 +1,13 @@
+<button (click)="toggleView()">Categories</button>
+
+<div class="categories-wrapper" *ngIf="showView">
+    <div class="categories-container">
+        <ul class="category-list">
+            <li *ngFor="let category of categoryList$ | async">
+                <a [routerLink]="['/products', category]" (click)="toggleView()"
+                    >{{ category | titlecase }}</a
+                >
+            </li>
+        </ul>
+    </div>
+</div>
