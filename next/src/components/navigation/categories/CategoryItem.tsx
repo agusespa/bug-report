@@ -2,13 +2,14 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import styles from "./SideBar.module.scss";
+import styles from "./Categories.module.scss";
 
 interface Props {
     category: string;
+    handleToggleClick: () => void;
 }
 
-export default function SidebarItem(props: Props) {
+export default function CategoryItem(props: Props) {
     const pathname = usePathname();
     const href = `/products/${props.category}`;
 
@@ -18,6 +19,7 @@ export default function SidebarItem(props: Props) {
             className={`${styles.sidebarLink} ${
                 pathname === href ? styles.active : ""
             }`}
+            onClick={props.handleToggleClick}
         >
             {props.category}
         </Link>
