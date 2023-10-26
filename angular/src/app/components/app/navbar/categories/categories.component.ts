@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ShoppingFacade } from 'src/app/facade/shopping.facade';
 
@@ -7,7 +7,7 @@ import { ShoppingFacade } from 'src/app/facade/shopping.facade';
     templateUrl: './categories.component.html',
     styleUrls: ['./categories.component.scss'],
 })
-export class CategoriesComponent {
+export class CategoriesComponent implements OnInit {
     categoryList$: Observable<string[] | undefined>;
     showView = false;
 

@@ -1,10 +1,10 @@
-import { HttpErrorResponse } from "@angular/common/http";
-import { createReducer, on } from "@ngrx/store";
+import { HttpErrorResponse } from '@angular/common/http';
+import { createReducer, on } from '@ngrx/store';
 import {
     loadCategories,
     loadCategoriesFail,
     loadCategoriesSuccess,
-} from "./categories.actions";
+} from './categories.actions';
 
 export interface CategoriesState {
     categories: string[];
