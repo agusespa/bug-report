@@ -1,9 +1,8 @@
-import ProductList from "@/src/components/products/ProductList";
-import { ProductsResponse, mapToProducts } from "@/src/models/Product";
-import styles from "@/src/app/products/ProductsPage.module.scss";
+import Products from "@/src/components/products/Products";
+import { Product, ProductResponse, mapToProducts } from "@/src/models/Product";
 
-async function getProducts(): Promise<ProductsResponse> {
-  const res = await fetch("https://dummyjson.com/products", {
+async function getProducts(): Promise<ProductResponse[]> {
+  const res = await fetch("http://127.0.0.1:8080/products", {
     next: { revalidate: 60000 },
   });
   if (!res.ok) {
@@ -12,14 +11,16 @@ async function getProducts(): Promise<ProductsResponse> {
   return res.json();
 }
 
-export default async function Products() {
-  const productsResponse = await getProducts();
-  const productList = mapToProducts(productsResponse.products);
+export default async function ProductsPage() {
+  let productList: Product[] = [];
 
-  return (
-    <div className={styles.productsPageContainer}>
-      <h1>All products</h1>
-      <ProductList products={productList} />
-    </div>
-  );
+  try {
+    const products = await getProducts();
+    productList = mapToProducts(products);
+  } catch (err) {
+    // TODO: handle error
+    console.error(err);
+  }
+
+  return <Products title="All products" productList={productList} />;
 }

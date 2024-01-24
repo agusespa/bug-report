@@ -8,9 +8,20 @@ interface Props {
 
 export default function ProductListItem({ product }: Props) {
     return (
-        <div className={styles.productListItemContainer}>
-            <Link href={`/product/${product.id}`}>{product.title}</Link>
-            <p>{`${product.price.amount} ${product.price.currency}`}</p>
-        </div>
+        <>
+            <Link
+                href={`/product/${product.id}`}
+                className={styles.productListItemContainer}
+            >
+                <div className={`${styles.detailsContainer} ${styles.left}`}>
+                    <p className={styles.title}>{product.name}</p>
+                    <p>{product.subtitle}</p>
+                </div>
+                <div className={`${styles.detailsContainer} ${styles.right}`}>
+                    <p>{`${product.price.amount} ${product.price.currency}`}</p>
+                    <p>{product.brand}</p>
+                </div>
+            </Link>
+        </>
     );
 }

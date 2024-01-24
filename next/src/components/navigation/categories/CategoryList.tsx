@@ -28,7 +28,7 @@ export default function CategoryList({ categoryList }: Props) {
             {isListShown ? (
                 <div className={styles.categoriesWrapper}>
                     <div className={styles.categoriesContainer}>
-                        <ul className={styles.list}>{mappedCategories}</ul>;
+                        <ul className={styles.list}>{mappedCategories}</ul>
                     </div>
                 </div>
             ) : null}

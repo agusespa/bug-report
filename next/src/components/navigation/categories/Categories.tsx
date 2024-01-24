@@ -1,7 +1,7 @@
 import CategoryList from "./CategoryList";
 
 async function getCategories(): Promise<string[]> {
-    const res = await fetch("https://dummyjson.com/products/categories", {
+    const res = await fetch("http://127.0.0.1:8080/products/categories", {
         next: { revalidate: 6000000 },
     });
     if (!res.ok) {
@@ -11,7 +11,13 @@ async function getCategories(): Promise<string[]> {
 }
 
 export default async function Categories() {
-    const categoryList = await getCategories();
+    let categoryList: string[] = [];
+    try {
+        categoryList = await getCategories();
+    } catch (err) {
+        // TODO: handle error
+        console.error(err);
+    }
 
     return <CategoryList categoryList={categoryList} />;
 }

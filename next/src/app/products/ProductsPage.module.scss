@@ -1,11 +1,7 @@
 .productsPageContainer {
     display: flex;
+    flex-direction: column;
     justify-content: flex-start;
+    align-items: flex-start;
     gap: 2rem;
-
-    .productsWrapper {
-        display: flex;
-        flex-direction: column;
-        gap: 1.5rem;
-    }
 }

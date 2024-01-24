@@ -1,34 +1,47 @@
 "use client";
 
-import useDebounce from "@/src/utils/useDebounce";
 import { useRouter } from "next/navigation";
-import { ChangeEventHandler, useEffect, useState } from "react";
+import { ChangeEventHandler, FormEvent, useState } from "react";
 
 export default function SearchBar() {
     const [term, setTerm] = useState("");
 
-    const debouncedTerm = useDebounce<string>(term, 600);
     const router = useRouter();
 
-    useEffect(() => {
-        if (debouncedTerm !== "")
-            router.push(`/products/search?title=${debouncedTerm}`);
-    }, [debouncedTerm]);
+    // TODO: implement a modal that shows suggestions
+    // const debouncedTerm = useDebounce<string>(term, 600);
+    // useEffect(() => {
+    //     if (debouncedTerm !== "") {
+    //         const encodedTerm = encodeURIComponent(debouncedTerm);
+    //         router.push(`/products/search?term=${encodedTerm}`);
+    //     }
+    // }, [debouncedTerm]);
 
     const handleSearchTermChange: ChangeEventHandler<HTMLInputElement> = (
         event
     ) => {
-        event.preventDefault();
         setTerm(event.target.value);
     };
 
+    const handleSearchFormSubmit = (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        if (term !== "") {
+            const encodedTerm = encodeURIComponent(term);
+            router.push(`/products/search?term=${encodedTerm}`);
+        }
+        const activeElement = document.activeElement as HTMLElement;
+        if (activeElement !== null) activeElement.blur();
+        setTerm("");
+    };
+
     return (
-        <input
-            type="search"
-            placeholder="Search"
-            name="searchTerm"
-            value={term}
-            onChange={handleSearchTermChange}
-        />
+        <form onSubmit={handleSearchFormSubmit}>
+            <input
+                type="search"
+                placeholder="Search"
+                value={term}
+                onChange={handleSearchTermChange}
+            />
+        </form>
     );
 }

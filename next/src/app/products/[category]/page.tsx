@@ -1,8 +1,9 @@
-import ProductList from "@/src/components/products/ProductList";
-import { ProductsResponse, mapToProducts } from "@/src/models/Product";
+import { Product, ProductResponse, mapToProducts } from "@/src/models/Product";
+import Products from "@/src/components/products/Products";
 
-async function getProducts(category: string): Promise<ProductsResponse> {
-  const res = await fetch(`https://dummyjson.com/products/category/${category}`, {
+async function getProducts(category: string): Promise<ProductResponse[]> {
+  const query = `category=${encodeURIComponent(category)}`;
+  const res = await fetch("http://127.0.0.1:8080/products?" + query, {
     next: { revalidate: 60000 },
   });
   if (!res.ok) {
@@ -15,14 +16,17 @@ interface Props {
   params: { category: string };
 }
 
-export default async function ProductsByCategory(props: Props) {
-  const productsResponse = await getProducts(props.params.category);
-  const productList = mapToProducts(productsResponse.products);
+export default async function ProductsByCategoryPage(props: Props) {
+  const title = decodeURIComponent(props.params.category);
+  let productList: Product[] = [];
 
-  return (
-    <>
-      <h1>{props.params.category}</h1>
-      <ProductList products={productList} />
-    </>
-  );
+  try {
+    const products = await getProducts(props.params.category);
+    productList = mapToProducts(products);
+  } catch (err) {
+    // TODO: handle error
+    console.error(err);
+  }
+
+  return <Products title={title} productList={productList} />;
 }

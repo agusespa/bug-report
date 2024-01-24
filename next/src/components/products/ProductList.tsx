@@ -1,5 +1,6 @@
 import { Product } from "@/src/models/Product";
 import { ReactElement } from "react";
+import styles from "./Products.module.scss";
 import ProductListItem from "./ProductListItem";
 
 interface Props {
@@ -11,7 +12,7 @@ const ProductList = (props: Props): ReactElement => {
         <ProductListItem product={p} key={p.id} />
     ));
 
-    return <div>{mappedProducts}</div>;
+    return <div className={styles.productListContainer}>{mappedProducts}</div>;
 };
 
 export default ProductList;
