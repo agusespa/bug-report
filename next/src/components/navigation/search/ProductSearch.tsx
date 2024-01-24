@@ -28,10 +28,10 @@ export default function SearchBar() {
         if (term !== "") {
             const encodedTerm = encodeURIComponent(term);
             router.push(`/products/search?term=${encodedTerm}`);
+            setTerm("");
         }
         const activeElement = document.activeElement as HTMLElement;
         if (activeElement !== null) activeElement.blur();
-        setTerm("");
     };
 
     return (

@@ -1,0 +1,79 @@
+{
+    "env": {
+        "browser": true,
+        "jest/globals": true
+    },
+    "extends": [
+        "standard-with-typescript",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "plugin:react-hooks/recommended",
+        "plugin:jest/recommended",
+        "prettier"
+    ],
+    "root": true,
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "sourceType": "module",
+        "project": "./tsconfig.json"
+    },
+    "plugins": ["react", "@typescript-eslint", "jest"],
+    "settings": {
+        "react": {
+            "version": "detect"
+        }
+    },
+    "rules": {
+        "prefer-const": "warn",
+        "camelcase": "off",
+        "spaced-comment": "warn",
+        "no-useless-return": "warn",
+        "no-useless-catch": "warn",
+        "no-undef": "warn",
+        "no-unused-vars": "warn",
+        "no-prototype-builtins": "warn",
+        "import/order": [
+            "warn",
+            {
+                "groups": [
+                    "external",
+                    "builtin",
+                    "internal",
+                    "sibling",
+                    "parent",
+                    "index"
+                ]
+            }
+        ],
+        "react/react-in-jsx-scope": "off",
+        "@typescript-eslint/semi": "off",
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/explicit-function-return-type": "warn",
+        "@typescript-eslint/strict-boolean-expressions": [
+            "warn",
+            { "allowString": true }
+        ],
+        "@typescript-eslint/no-misused-promises": "warn",
+        "@typescript-eslint/no-floating-promises": "warn",
+        "@typescript-eslint/no-empty-function": "warn",
+        "@typescript-eslint/array-type": "warn",
+        "@typescript-eslint/return-await": "warn",
+        "@typescript-eslint/no-inferrable-types": "warn",
+        "@typescript-eslint/promise-function-async": "warn",
+        "@typescript-eslint/prefer-nullish-coalescing": "warn",
+        "@typescript-eslint/consistent-type-definitions": "warn",
+        "@typescript-eslint/consistent-type-assertions": "off",
+        "@typescript-eslint/restrict-template-expressions": [
+            "warn",
+            { "allowAny": true }
+        ],
+        "@typescript-eslint/no-unused-expressions": "warn",
+        "@typescript-eslint/prefer-optional-chain": "warn"
+    }
+}
