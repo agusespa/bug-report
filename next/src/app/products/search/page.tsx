@@ -6,7 +6,7 @@ async function getProducts(
 ): Promise<ProductResponse[]> {
   if (typeof query === "string") {
     const res = await fetch(
-      "http://127.0.0.1:8080/products/search?term=" + query,
+      "http://127.0.0.1:8080/productapi/products/search?term=" + query,
       {
         next: { revalidate: 60000 },
       }

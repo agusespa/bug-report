@@ -3,7 +3,7 @@ import styles from "@/src/app/product/[id]/ProductPage.module.scss";
 import AddToCartButton from "@/src/components/product/AddToCartButton";
 
 async function getProduct(id: string): Promise<ProductResponse> {
-  const res = await fetch(`http://127.0.0.1:8080/products/${id}`, {
+  const res = await fetch(`http://127.0.0.1:8080/productapi/products/${id}`, {
     next: { revalidate: 60000 },
   });
   if (!res.ok) {

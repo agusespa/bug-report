@@ -3,7 +3,7 @@ import Products from "@/src/components/products/Products";
 
 async function getProducts(category: string): Promise<ProductResponse[]> {
   const query = `category=${encodeURIComponent(category)}`;
-  const res = await fetch("http://127.0.0.1:8080/products?" + query, {
+  const res = await fetch("http://127.0.0.1:8080/productapi/products?" + query, {
     next: { revalidate: 60000 },
   });
   if (!res.ok) {
