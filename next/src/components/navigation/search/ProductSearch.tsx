@@ -1,10 +1,11 @@
-"use client";
+'use client';
 
-import { useRouter } from "next/navigation";
-import { ChangeEventHandler, FormEvent, useState } from "react";
+import { useRouter } from 'next/navigation';
+import { ChangeEventHandler, FormEvent, useState } from 'react';
+import styles from './ProductSearch.module.scss';
 
 export default function SearchBar() {
-    const [term, setTerm] = useState("");
+    const [term, setTerm] = useState('');
 
     const router = useRouter();
 
@@ -17,26 +18,25 @@ export default function SearchBar() {
     //     }
     // }, [debouncedTerm]);
 
-    const handleSearchTermChange: ChangeEventHandler<HTMLInputElement> = (
-        event
-    ) => {
+    const handleSearchTermChange: ChangeEventHandler<HTMLInputElement> = event => {
         setTerm(event.target.value);
     };
 
     const handleSearchFormSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (term !== "") {
+        if (term !== '') {
             const encodedTerm = encodeURIComponent(term);
             router.push(`/products/search?term=${encodedTerm}`);
-            setTerm("");
+            setTerm('');
         }
         const activeElement = document.activeElement as HTMLElement;
         if (activeElement !== null) activeElement.blur();
     };
 
     return (
-        <form onSubmit={handleSearchFormSubmit}>
+        <form className={styles.formContainer} onSubmit={handleSearchFormSubmit}>
             <input
+                className={styles.inputContainer}
                 type="search"
                 placeholder="Search"
                 value={term}

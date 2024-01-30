@@ -27,8 +27,8 @@ interface Props {
 export default async function ProductsSearchPage(props: Props) {
   const title =
     typeof props.searchParams.term === "string"
-      ? decodeURIComponent(props.searchParams.term)
-      : "Search";
+      ? `Results for "${decodeURIComponent(props.searchParams.term)}":`
+      : "Search results:";
 
   let productList: Product[] = [];
 

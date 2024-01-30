@@ -2,6 +2,7 @@ import CategoryList from './CategoryList';
 
 async function getCategories(): Promise<string[]> {
     const res = await fetch('http://127.0.0.1:8080/productapi/products/categories', {
+        method: 'GET',
         next: { revalidate: 6000000 },
     });
     if (!res.ok) {

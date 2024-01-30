@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import styles from "./Categories.module.scss";
@@ -16,7 +14,7 @@ export default function CategoryItem(props: Props) {
     return (
         <Link
             href={href}
-            className={`${styles.sidebarLink} ${
+            className={`${styles.categoryLink} ${
                 pathname === href ? styles.active : ""
             }`}
             onClick={props.handleToggleClick}
