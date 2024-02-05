@@ -1,0 +1,53 @@
+.userRegisterContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 2rem;
+
+    .loginForm {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        max-width: 25rem;
+
+        .formInputContainer {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+
+            .authFormInput {
+                padding: 0.7rem 1rem;
+                width: 18rem;
+                border: 1px solid #ccc;
+                border-radius: 0.2rem;
+                font-size: 1rem;
+                font-weight: 400;
+                color: black;
+            }
+
+            .inputError {
+                width: 18rem;
+                font-size: 1rem;
+                font-weight: 400;
+                color: red;
+            }
+        }
+
+        .loginButton {
+            padding: 0.8rem 1rem;
+            width: 18rem;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 0.2rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+
+            &:hover {
+                background-color: #0056b3;
+            }
+        }
+    }
+}
