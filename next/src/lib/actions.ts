@@ -47,6 +47,32 @@ export async function login(prevState: State, formData: FormData) {
     redirect('/');
 }
 
+export async function logout(prevState: State, formData: FormData) {
+    cookies().delete('access_token');
+    cookies().delete('refresh_token');
+    redirect('/');
+}
+
+export async function hardSignOut(): Promise<State> {
+    const refreshToken = cookies().get('refresh_token')?.value;
+
+    const res = await fetch('http://127.0.0.1:8080/authapi/revoque', {
+        method: 'PUT',
+        headers: {
+            Authorization: `Bearer ${refreshToken}`,
+        },
+    });
+    if (!res.ok) {
+        let message = 'Sign out failed';
+        return { message };
+    }
+
+    cookies().delete('access_token');
+    cookies().delete('refresh_token');
+
+    redirect('/');
+}
+
 export async function register(prevState: State, formData: FormData) {
     const email = formData.get('email')?.toString();
     const password = formData.get('password')?.toString();
@@ -73,7 +99,7 @@ export async function register(prevState: State, formData: FormData) {
         return { message };
     }
 
-    redirect('/user/login');
+    redirect('/customer/login');
 }
 
 function validateRegistrationForm(
@@ -156,4 +182,22 @@ function hasErrors(state: State): boolean {
         if (state.errors[key] !== '') return true;
     }
     return false;
+}
+
+export interface Session {
+    accessToken?: string;
+    refreshToken?: string;
+}
+export async function getSession(): Promise<Session> {
+    const accessToken = cookies().get('access_token')?.value;
+    const refreshToken = cookies().get('refresh_token')?.value;
+    return { accessToken, refreshToken };
+}
+
+export async function updateSession(accessToken: string): Promise<void> {
+  'use server';
+    cookies().set('access_token', accessToken, {
+        httpOnly: true,
+        sameSite: 'strict',
+    });
 }

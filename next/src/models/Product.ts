@@ -20,48 +20,48 @@ interface ProductDetails {
 }
 
 export interface ProductResponse {
-    ID: number;
-    Name: string;
-    Brand: string;
-    Subtitle: string;
-    Category: string;
-    Price: PriceResponse;
-    Details?: ProductDetailsResponse;
+    id: number;
+    name: string;
+    brand: string;
+    subtitle: string;
+    category: string;
+    price: PriceResponse;
+    details?: ProductDetailsResponse;
 }
 
 interface PriceResponse {
-    Amount: number;
-    Currency: string;
+    amount: number;
+    currency: string;
 }
 
 interface ProductDetailsResponse {
-    Stock: number;
-    Description: string;
-    Sku: string;
+    stock: number;
+    description: string;
+    sku: string;
 }
 
 export function mapToProduct(res: ProductResponse): Product {
     if (!res) return {} as Product;
 
     const price: Price = {
-        amount: res.Price?.Amount,
-        currency: res.Price?.Currency,
+        amount: res.price?.amount,
+        currency: res.price?.currency,
     };
 
-    const details: ProductDetails | undefined = res.Details
+    const details: ProductDetails | undefined = res.details
         ? {
-              stock: res.Details?.Stock,
-              description: res.Details?.Description,
-              sku: res.Details?.Sku,
+              stock: res.details?.stock,
+              description: res.details?.description,
+              sku: res.details?.sku,
           }
         : undefined;
 
     return {
-        id: res.ID,
-        name: res.Name,
-        brand: res.Brand,
-        subtitle: res.Subtitle,
-        category: res.Category,
+        id: res.id,
+        name: res.name,
+        brand: res.brand,
+        subtitle: res.subtitle,
+        category: res.category,
         price,
         details,
     };

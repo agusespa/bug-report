@@ -1,7 +1,7 @@
 'use client';
 import { useFormState } from 'react-dom';
 import { State, login } from '@/src/lib/actions';
-import styles from '@/src/app/user/register/UserRegister.module.scss';
+import styles from '@/src/app/customer/register/UserRegister.module.scss';
 
 export default async function UserLoginPage() {
     const initialState: State = { message: undefined, errors: undefined };

@@ -8,6 +8,7 @@ async function getProducts(category: string): Promise<ProductResponse[]> {
         next: { revalidate: 60000 },
     });
     if (!res.ok) {
+        console.log(res.text());
         throw new Error('Failed to fetch data');
     }
     return res.json();

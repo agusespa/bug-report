@@ -1,49 +1,83 @@
 import Link from 'next/link';
 import styles from './UserLogin.module.scss';
 import UserIcon from './UserIcon';
+import { CustomerResponse } from '@/src/models/Customer';
+import { Session, getSession, updateSession } from '@/src/lib/actions';
 import { cookies } from 'next/headers';
 
-async function getUser(accessToken: string): Promise<any> {
-    const res = await fetch('http://127.0.0.1:8080/authapi/authenticate', {
+async function getCustomer(session: Session): Promise<any> {
+    if (!session.accessToken) {
+        throw new Error('No access token provided');
+    }
+
+    let res = await fetch('http://127.0.0.1:8080/customerapi/customer', {
         method: 'GET',
-        next: { revalidate: 6000000 },
         headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${session.accessToken}`,
         },
     });
+
+    if (res.status === 401) {
+        if (!session.refreshToken) {
+            throw new Error('No access token provided');
+        }
+        const refRes = await fetch('http://127.0.0.1:8080/authapi/refresh', {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${session.refreshToken}`,
+            },
+        });
+        if (!refRes.ok) {
+            // TODO: logout, in all cases?
+            throw new Error(await refRes.text());
+        }
+        const resToken: { accessToken: string } = await refRes.json();
+
+        // TODO set new access token
+
+        if (!resToken.accessToken) {
+            // TODO: logout
+            throw new Error('invalid refresh token');
+        }
+
+        res = await fetch('http://127.0.0.1:8080/customerapi/customer', {
+            method: 'GET',
+            headers: {
+                Authorization: `Bearer ${resToken.accessToken}`,
+            },
+        });
+    }
+
     if (!res.ok) {
-        let message = 'Login failed';
-        console.log(res.text());
-        const errorStatus = res.status;
-        message = errorStatus === 409 ? message + ': ??' : message;
-        throw new Error(message);
+        throw new Error(await res.text());
     }
     return res.json();
 }
 
 export default async function UserLogin() {
-    const accessToken = cookies().get('access_token')?.value;
-    let username: any;
+    const session = await getSession();
+    let customer: CustomerResponse | undefined = undefined;
+    updateSession("chchchc");
+
     try {
-        if (!accessToken) throw new Error('Access token not available');
-        username = await getUser(accessToken);
+        customer = await getCustomer(session);
     } catch (err) {
         // TODO: handle error
         console.error(err);
     }
 
-    if (username) {
+    if (customer) {
         return (
-            <Link href={'/user/account'} className={styles.userLoginContainer}>
+            <Link href={'/customer/account'} className={styles.userLoginContainer}>
                 <UserIcon />
-                <p>{username}</p>
+                <p>{customer.first_name}</p>
             </Link>
         );
     } else {
         return (
-            <Link href="/user/login" className={styles.userLoginContainer}>
+            <Link href="/customer/login" className={styles.userLoginContainer}>
                 <UserIcon />
-                <p>Login</p>
+                <p>Log in</p>
             </Link>
         );
     }
